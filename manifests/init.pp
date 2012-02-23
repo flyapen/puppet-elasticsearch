@@ -17,11 +17,7 @@ class elasticsearch ($version="0.17.6-1.el6"){
   # Add hasssatus .. 
   service {"elasticsearch":
     ensure    => "running",
-    hasstatus => 'true',
-    enable    => 'true';
-
-
-
+    hasstatus => 'true';
   }
   # Elastic search version needs to be identical to the one used for Logstash ! 
 
@@ -30,6 +26,13 @@ class elasticsearch ($version="0.17.6-1.el6"){
       ensure => "$version";
     }
 
+  file {
+    '/etc/init.d/elasticsearch':
+      ensure => 'file',
+      group => '0',
+      mode => '755',
+      owner => '0',
+      source => 'puppet:///modules/elasticsearch/elasticsearch';
+    }
 
 }
-
